@@ -1,5 +1,5 @@
 <template>
-  <div class="w-16 h-16 flex items-center justify-center border border-4 border-blue-500 rounded bg-green-200">
+  <div class="w-16 h-16 flex items-center justify-center border border-4 border-blue-800 rounded bg-yellow-100">
     <div class="text-2xl">
       {{ number }}
     </div>
