@@ -1,7 +1,6 @@
 const express = require('express');
 const { exec } = require('child_process');
 const { spawn } = require('child_process');
-const { stringify } = require('querystring');
 const app = express();
 const port = 3000;
 
@@ -25,6 +24,35 @@ app.get('/', (req, res) => {
     //console.log(`Output: ${data}`);
     const stringData= data.toString()
     const splitano= stringData.split("++++++++")
+    let splitano2=[]
+    retriveRegex= /Retrieve (\d*)/gm
+    reloactionRegex = /Relocation \d+: \[ *(\d*)] (\d+)->(\d+)/gms
+    for (let i =0; i < splitano.length; i++){
+      splitano2.push(splitano[i].split("--------"))
+    }
+    //console.log(splitano2)
+  
+    for (let i =1; i < splitano2.length; i++){
+      for (let j =0; j < splitano2[i].length; j++){
+        console.log(splitano2[i][j]+i+"__________"+j)
+        let match = retriveRegex.exec(splitano2[i][j])
+        if(match!==null){console.log("retrive : "+match[1])
+        }
+        else{
+          let match2 = reloactionRegex.exec(splitano2[i][j])
+          
+          console.log(match2+" "+ i +" "+j)
+          if(match2!==null){console.log("block : "+match2[1]+" from : "+match2[2]+" to : "+match2[3])}else{console.log(reloactionRegex.exec(splitano2[i][j]))}
+        }
+      
+    
+      }
+    
+    }
+
+    console.log(reloactionRegex.exec(splitano2[6][1]))
+  
+    /*
     //console.log( splitano[0].split(":")[0].split(" ")[3])
 
     const layoutRegex = /\[ *(\d*)\]/g; 
@@ -49,8 +77,9 @@ const test=2
 
   console.log(steps)
   console.log(splitano[test])
-
+*/
   });
+  
   /*
   childProcess.stderr.on('data', (data) => {
     console.error(`Error: ${data}`);
